@@ -1,7 +1,6 @@
 import sys
 sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
-from collections import deque
 
 # Queue is first in and first out
 class Queue:
@@ -19,7 +18,7 @@ class Queue:
             return 
         else:
             self.size -= 1
-            return self.storage.remove_from_head()
+            return self.storage.remove_from_tail()
 
     # return length of items in queue
     def len(self):
