@@ -11,15 +11,15 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, key, limit=10):
-        # Key of dict
-        self.key = key
+        self.limit = limit
         # current size
         self.size = 0
         # store key and value in hashtable
         self.hash = {}
         # Get methods from doublylinkedlist
         self.storage = DoublyLinkedList()
-        # storage dict 
+        # storage dict
+        
 
     """
     Retrieves the value associated with the given key. Also
@@ -30,15 +30,16 @@ class LRUCache:
     """
     def get(self, key):
         # if value of key is none, return none
-        if self.key == None:
-            return 
+        if key == None:
+            return None
         # if key is present, return value, and use method 'move-to-end'
-        node = self.hash[key]
-
-        if self.storage.head == node:
-            self.storage.remove_from_head()
+        
+        elif key in self.hash:
+            node = self.hash[key]
+            # self.storage.remove_from_head()
             self.storage.move_to_end(node)
-            return node.value 
+            return node.value[1]
+
         # move key-value pair to end of list
 
     """
@@ -53,9 +54,23 @@ class LRUCache:
     """
     def set(self, key, value):
         # variable to store key-pair values
-        new_entry = self.storage.add_to_tail(value)
         # add a new key-value pairs
+        if key in self.hash:
+            node = self.hash[key]
+            node.value = (key, value)
+            self.storage.move_to_end(node)
+            return
         # new keyvalue is most recently used == tail
         # if cache is max, oldest entry == head is overwritten
+        if self.size == self.limit:
+            # var to get the value of head
+            oldest_entry = self.storage.head.value[0]
+            # delete the head's value
+            del self.hash[oldest_entry]
+            # remove from head
+            self.storage.remove_from_head()
+            self.size -= 1
         # if key already exists, overwrite old value with new value
-        pass
+        self.storage.add_to_tail((key, value))
+        self.hash[key] = self.storage.tail
+        self.size +=1
