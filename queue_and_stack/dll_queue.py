@@ -4,9 +4,9 @@ from doubly_linked_list import DoublyLinkedList
 
 # Queue is first in and first out
 class Queue:
-    def __init__(self):
+    def __init__(self, storage=DoublyLinkedList()):
         # Why is our DLL a good choice to store our elements?
-        self.storage = DoublyLinkedList()
+        self.storage = storage
         self.size = 0
     # Add item to the back of the queue
     def enqueue(self, value):
@@ -18,7 +18,7 @@ class Queue:
             return 
         else:
             self.size -= 1
-            return self.storage.remove_from_tail()
+            return self.storage.remove_from_head()
 
     # return length of items in queue
     def len(self):
