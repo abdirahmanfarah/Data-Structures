@@ -77,7 +77,19 @@ class BinarySearchTree:
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        # for each value return cb
+        # base case is if self.value == cb(self.value)
+        if self == cb(self.value):
+            return cb
+        # if there is a right node, equal cb(self.value) to the value
+        if self.right:
+            self.right.value == cb(self.value)
+            return self.right.for_each(cb)
+        # if not, check if there is a left node,
+        elif self.left:
+            self.left.value == cb(self.value) 
+            return self.left.for_each(cb)
+        # equal left node to self.value
 
     # DAY 2 Project -----------------------
 
